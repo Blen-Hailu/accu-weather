@@ -3,9 +3,8 @@ import {useState} from 'react';
 function InputForm(){ 
 
   const [city, setCity] =useState('')
-
   const handleCityChange = event => {
-    setFullName(event.target.value)
+    setCity(event.target.value)
   };
 
   const handleSubmit = event => {

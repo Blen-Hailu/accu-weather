@@ -1,6 +1,6 @@
 //import { useState, useEffect } from 'react';
 import './App.css';
-import InputForm from './components/inputform';
+import InputForm from './components/inputForm';
 
 function App (){
   <InputForm/>
