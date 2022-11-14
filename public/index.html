@@ -26,8 +26,10 @@
     -->
     <title>React App</title>
   </head>
+  <script>
+    fetch('http://localhost:8000/api').then(res => res.json()).then(res => console.log(res));
+    </script>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
       This HTML file is a template.
