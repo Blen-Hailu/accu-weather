@@ -1,8 +1,8 @@
+import axios from "axios";
 import React from 'react';
-import CityComponent from './Components/CityComponent';
-import WeatherComponent from './Components/WeatherComponent';
-import axios from 'axios';
 import { useState } from 'react';
+import CityComponent from './Components/cityComponent';
+import WeatherComponent from './Components/weatherComponent';
 import './App.css';
 
 
