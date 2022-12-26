@@ -1,64 +1,52 @@
-import axios from "axios";
-import React from 'react';
-import { useState } from 'react';
-import CityComponent from './Components/cityComponent';
-import WeatherComponent from './Components/weatherComponent';
+import React, {useState } from 'react';
+import axios from 'axios';
 import './App.css';
+import { WeatherViewer } from './Components/weatherdisplay';
 
-
-const api = {
-  key: "TA8uLPoxF8izLtUopNm4Wy42RrGsMA9",
-  base: "http://dataservice.accuweather.com/locations/v1/cities/search",
-
-};
-const crossDomain = "https://whispering-river-64643.herokuapp.com/";
-const requestUrl = `${crossDomain}/${api.base}`;
 
 function App() {
+   
+   
+  //get city information
 
-  /*fetch ('http://localhost:8000/api')
-  .then(res => res.json())
-  .then(res=> console.log(res));
-  */
-  
-  const [city, updateCity] = useState('');
-  const [weather, updateWeather] = useState('');
-  const [query, setQuery] = useState('');
-  const [error, setError] = useState('');
+  const apiKey="1cnmbGBBHBtf9xAS0QaF0L5ImUpN9Uic";
+   const urlCity="http://dataservice.accuweather.com/locations/v1/cities/search";
+     //states
+ const [city, setCity] = useState('');
+ const [cityData, setCityData] = useState(null);
+//city Search from Submit
 
-  const fetchWeather = async (e) => {
-    e.preventDefault();
-    await axios
-      .get(`${requestUrl}weather?q=${city}&units=metric&APPID=${api.key}`)
-      .then((response) => {
-        updateWeather(response.data);
-        setQuery('');
-        console.log(response);
-      })
+ const getCity = (e) => {
+  e.preventDefault();
+  axios.get(`${urlCity}?apikey=${apiKey}&q=${city}`)
+  .then((response)=>{
+    console.log(response.data);
+    setCityData(response.data[0]);
+    setCity('');
 
-      .catch((error) => {
-        console.log(error);
-        updateWeather('');
-        setQuery('');
-        setError({ message: 'Not Found', query: query });
-      });
-  };
-  return (
-    <div className='App'>
-      <h1>Kylma Forecast</h1>
-      {weather ? 
-        (<WeatherComponent weather={weather} />
-      ) :
-      
-      (
-        <>
-          <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
-          <li id='error'>
-            {error.query} {error.message}
-          </li>
-        </>
-      )}
+  }).catch(err=>console.log(err.messge))
+};
+ 
+
+return (
+  <>
+    <div className='wrapper'>
+      <h1 className='headliner'> Accu Weather App</h1>
+
+        <form onSubmit={getCity}>
+          <label></label>
+          <div className='search-box'>
+          <input className='form-control' required placeholder='Search for a city to get weather data'
+          value={city} onChange={(e)=>setCity(e.target.value)}/>
+          <button type='submit' className="btn"> SEARCH
+          </button>
+        </div>
+      </form>
+      {cityData&& <div style={{padding:10+'px', width: 100+'%'}}><WeatherViewer cityData={cityData}/></div>}
     </div>
+        
+
+    </>
   );
 }
 export default App;
